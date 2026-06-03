@@ -4,6 +4,10 @@
 
 **A plain-text memory format for LLM agents.**
 
+**Not a memory *service* — a *format*.** No database, no embeddings, no daemon: it's plain text
+you can grep, diff, and hand to any model or human. If you want semantic search over a memory
+server, that's a different tool — this is the file format underneath.
+
 `.mneme` stores the things an agent must remember **across sessions** — decisions, facts,
 preferences, gotchas, goals — in a way a *probabilistic reader* (a language model) can read
 and write cheaply and trust. It is plain text: any editor, any model opens it directly.
