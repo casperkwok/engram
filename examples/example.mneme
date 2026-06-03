@@ -1,0 +1,36 @@
+# example.mneme —— Mneme 示例（演示 supersede 链 / 偏好 / OKR / 踩坑）
+# spine: python ../tools/mneme_tool.py spine example.mneme
+
+@ DEC-0031  storage/cache
+gist  本地缓存用带文件锁的 JSON 方案
+state superseded   conf low   since 2026-05-10   seen 2026-06-03
+cue   并发写 / 本地存储选型
+> 最初用文件锁规避 JSON 并发问题。锁竞争严重，且崩溃后锁残留。
+link  superseded-by DEC-0042
+
+@ DEC-0042  storage/cache
+gist  本地缓存用 SQLite 取代 JSON 文件
+state live   conf high   since 2026-06-03   seen 2026-06-03
+cue   并发写 / 缓存损坏 / 查询慢 / 本地存储选型
+> JSON 并发写会损坏，查询得全量加载。改用 SQLite：单文件、事务、增量查询。
+> 代价：多一个依赖，要写迁移脚本。
+link  supersedes DEC-0031
+
+@ PREF-0007  style/commit
+gist  提交信息用中文，首行 ≤ 30 字
+state live   conf med   since 2026-05-20   seen 2026-06-01
+cue   写 commit / git message / 提交规范
+> 用户习惯中文提交记录；首行简短，细节放正文。
+
+@ GOTCHA-0004  storage/migration
+gist  迁移脚本在 Windows 路径下会失败（反斜杠未转义）
+state live   conf high   since 2026-06-03   seen 2026-06-03
+cue   迁移脚本 / Windows / 路径 / 反斜杠
+> 触发：Windows 上含空格或反斜杠的路径。绕法：统一用 pathlib，禁手拼路径。
+
+@ OKR-2026Q2-01  project/memory
+gist  把本地记忆系统做稳
+state live   conf high   since 2026-04-01   seen 2026-06-02
+cue   季度目标 / 记忆系统 / 进度复盘
+> KR1 决策日志零数据损坏：target 0 / now 2 / at-risk
+> KR2 单条检索可独立理解率：target 95% / now 80% / on-track
